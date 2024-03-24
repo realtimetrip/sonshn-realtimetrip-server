@@ -1,12 +1,12 @@
 package com.venti.realtimetrip.auth;
 
-import com.venti.realtimetrip.config.MailConfig;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
@@ -19,7 +19,7 @@ public class AuthService {
 
     private final AuthRepository authRepository;
 
-    private final MailConfig mailConfig;
+    private final JavaMailSender javaMailSender;
 
     private String randomVerificationCode;
 
@@ -53,7 +53,7 @@ public class AuthService {
         String messageContext = "회원가입을 위해 이메일 인증을 진행합니다.\n" +
                 "인증번호 :" + randomVerificationCode + "\n";
 
-        MimeMessage message = mailConfig.javaMailSender().createMimeMessage();
+        MimeMessage message = javaMailSender.createMimeMessage();
         message.setFrom(new InternetAddress("sonshumc75@gmail.com", "Real Time Trip")); //발신자 설정
         message.addRecipients(MimeMessage.RecipientType.TO, emailReceiver); //수신자 설정
         message.setSubject(title); //제목 설정
@@ -70,7 +70,7 @@ public class AuthService {
     public String sendEmail(String emailReceiver) throws MessagingException, UnsupportedEncodingException {
 
         MimeMessage emailForm = createEmailForm(emailReceiver);
-        mailConfig.javaMailSender().send(emailForm);
+        javaMailSender.send(emailForm);
 
         return randomVerificationCode;
     }
