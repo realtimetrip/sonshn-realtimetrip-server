@@ -6,6 +6,8 @@ import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +21,7 @@ public class AuthService {
 
     private final AuthRepository authRepository;
 
-    private final JavaMailSender javaMailSender;
+    private final MailSender javaMailSender;
 
     private String randomVerificationCode;
 
@@ -44,7 +46,7 @@ public class AuthService {
      *
      * @return MimeMessage -> 인증 메일
      */
-    public MimeMessage createEmailForm(String email) throws MessagingException, UnsupportedEncodingException {
+    public SimpleMailMessage createEmailForm(String email) throws MessagingException, UnsupportedEncodingException {
 
         createRandomCode(email);
 
@@ -53,11 +55,15 @@ public class AuthService {
         String messageContext = "회원가입을 위해 이메일 인증을 진행합니다.\n" +
                 "인증번호 :" + randomVerificationCode + "\n";
 
-        MimeMessage message = javaMailSender.createMimeMessage();
-        message.setFrom(new InternetAddress("sonshumc75@gmail.com", "Real Time Trip")); //발신자 설정
-        message.addRecipients(MimeMessage.RecipientType.TO, emailReceiver); //수신자 설정
+        // MimeMessage message = javaMailSender.createMimeMessage();
+        SimpleMailMessage message = new SimpleMailMessage();
+        // message.setFrom(new InternetAddress("sonshumc75@gmail.com", "Real Time Trip")); //발신자 설정
+        message.setFrom("sonshumc75@gmail.com");
+        // message.addRecipients(MimeMessage.RecipientType.TO, emailReceiver); //수신자 설정
+        message.setTo(emailReceiver);
         message.setSubject(title); //제목 설정
-        message.setText(messageContext, "utf-8", "html"); //내용 설정
+        // message.setText(messageContext, "utf-8", "html"); //내용 설정
+        message.setText(messageContext);
 
         return message;
     }
@@ -69,7 +75,8 @@ public class AuthService {
      */
     public String sendEmail(String emailReceiver) throws MessagingException, UnsupportedEncodingException {
 
-        MimeMessage emailForm = createEmailForm(emailReceiver);
+        // MimeMessage emailForm = createEmailForm(emailReceiver);
+        SimpleMailMessage emailForm = createEmailForm(emailReceiver);
         javaMailSender.send(emailForm);
 
         return randomVerificationCode;
