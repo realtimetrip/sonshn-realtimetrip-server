@@ -5,9 +5,9 @@ name: realtimetrip
 on:
   # main 브랜치에 push나 pull request 발생 시
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
 # 위 이벤트 발생 시 실행될 작업들
 jobs:
@@ -26,10 +26,12 @@ jobs:
       with:
         java-version: '17'
         distribution: 'corretto'
-
+        
+    - run : mkdir ./src/main/resources
+    - run : cd ./src/main/resources
     - run : touch ./src/main/resources/application.yml
     - run : echo "${{ secrets.APPLICATION }}" > ./src/main/resources/application.yml
-
+        
     # Gradle Build를 위한 권한 부여
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
