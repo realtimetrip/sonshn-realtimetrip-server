@@ -30,5 +30,13 @@ public class UserService {
 
         return user.getEmail();
     }
-    
+
+    @Transactional(readOnly = true)
+    public String login(UserLoginDto userLoginDto) {
+
+        User loginUser = userRepository.findByEmailAndPassword(userLoginDto.getEmail(), userLoginDto.getPassword());
+
+        return loginUser.getEmail();
+    }
+
 }

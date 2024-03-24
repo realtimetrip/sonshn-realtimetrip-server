@@ -2,6 +2,8 @@ package com.venti.realtimetrip.user;
 
 import com.venti.realtimetrip.auth.AuthEmailDto;
 import com.venti.realtimetrip.auth.AuthService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -33,4 +35,26 @@ public class UserController {
             return email;
         }
     }
+
+    /**
+     * 로그인
+     * @param userLoginDto 로그인 Dto
+     * @return
+     */
+    @PostMapping("/login")
+    public String login(@RequestBody UserLoginDto userLoginDto, HttpServletResponse response) {
+
+        String loginUser = userService.login(userLoginDto);
+
+        if(loginUser == null){
+            return "일치하는 회원 정보가 존재하지 않습니다.";
+        }
+
+        Cookie cookieCode = new Cookie("userCookie", loginUser);
+        cookieCode.setMaxAge(7*24*60*60);
+        response.addCookie(cookieCode);
+
+        return loginUser;
+    }
+
 }
