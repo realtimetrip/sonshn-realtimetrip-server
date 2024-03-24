@@ -9,6 +9,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Slf4j
@@ -32,6 +33,7 @@ public class AuthService {
         AuthCode authCode = AuthCode.builder()
                 .email(email)
                 .code(randomVerificationCode)
+                .createdAt(LocalDateTime.now())
                 .build();
 
         authRepository.save(authCode);

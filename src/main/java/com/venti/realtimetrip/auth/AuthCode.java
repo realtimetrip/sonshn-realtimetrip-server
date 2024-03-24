@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "AuthCode")
 @Getter
 @Builder
 @NoArgsConstructor
