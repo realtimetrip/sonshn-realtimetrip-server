@@ -1,6 +1,7 @@
-package com.venti.realtimetrip.domain.auth;
+package com.venti.realtimetrip.domain.auth.controller;
 
-import com.venti.realtimetrip.domain.user.UserDto;
+import com.venti.realtimetrip.domain.auth.service.AuthService;
+import com.venti.realtimetrip.domain.user.dto.UserDto;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

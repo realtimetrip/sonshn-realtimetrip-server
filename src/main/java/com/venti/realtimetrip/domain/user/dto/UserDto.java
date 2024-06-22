@@ -1,5 +1,6 @@
-package com.venti.realtimetrip.domain.user;
+package com.venti.realtimetrip.domain.user.dto;
 
+import com.venti.realtimetrip.domain.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

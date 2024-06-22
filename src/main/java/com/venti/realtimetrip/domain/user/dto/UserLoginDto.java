@@ -1,4 +1,4 @@
-package com.venti.realtimetrip.domain.user;
+package com.venti.realtimetrip.domain.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

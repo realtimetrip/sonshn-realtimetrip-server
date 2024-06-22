@@ -1,5 +1,8 @@
-package com.venti.realtimetrip.domain.auth;
+package com.venti.realtimetrip.domain.auth.service;
 
+import com.venti.realtimetrip.domain.auth.dto.AuthEmailDto;
+import com.venti.realtimetrip.domain.auth.entity.AuthCode;
+import com.venti.realtimetrip.domain.auth.repository.AuthRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;

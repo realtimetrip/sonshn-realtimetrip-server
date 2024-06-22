@@ -1,5 +1,9 @@
-package com.venti.realtimetrip.domain.user;
+package com.venti.realtimetrip.domain.user.service;
 
+import com.venti.realtimetrip.domain.user.dto.UserDto;
+import com.venti.realtimetrip.domain.user.dto.UserLoginDto;
+import com.venti.realtimetrip.domain.user.entity.User;
+import com.venti.realtimetrip.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
