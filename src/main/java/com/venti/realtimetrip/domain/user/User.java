@@ -1,4 +1,4 @@
-package com.venti.realtimetrip.user;
+package com.venti.realtimetrip.domain.user;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

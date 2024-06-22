@@ -1,4 +1,4 @@
-package com.venti.realtimetrip.auth;
+package com.venti.realtimetrip.domain.auth;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

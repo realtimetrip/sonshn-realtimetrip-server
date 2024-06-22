@@ -1,7 +1,7 @@
-package com.venti.realtimetrip.user;
+package com.venti.realtimetrip.domain.user;
 
-import com.venti.realtimetrip.auth.AuthEmailDto;
-import com.venti.realtimetrip.auth.AuthService;
+import com.venti.realtimetrip.domain.auth.AuthEmailDto;
+import com.venti.realtimetrip.domain.auth.AuthService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
