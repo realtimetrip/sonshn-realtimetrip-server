@@ -36,6 +36,8 @@ dependencies {
 	// implementation 'org.apache.commons:commons-lang3:3.12.0'
 	// Redis
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+	// Chat - STOMP (Web Socket)
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 }
 
 tasks.named('test') {
