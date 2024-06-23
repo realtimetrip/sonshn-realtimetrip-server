@@ -42,11 +42,21 @@ public class ChatMessageController {
     }
 
     /**
-     * 메시지 발송
+     * 메시지 발송 (STOMP)
      * @param message
      */
     @MessageMapping("/send-message")
-    public void sendMessage(@Payload ChatMessageDto message) {
+    public void sendMessageUsingStomp(@Payload ChatMessageDto message) {
+        message.setMessage(message.getMessage());
+        template.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
+    }
+
+    /**
+     * 메시지 발송 (Redis)
+     * @param message
+     */
+    @MessageMapping("/redis/send-message")
+    public void sendMessageUsingRedis(@Payload ChatMessageDto message) {
         message.setMessage(message.getMessage());
         template.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
     }
