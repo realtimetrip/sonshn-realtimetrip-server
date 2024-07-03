@@ -81,7 +81,7 @@ public class AuthService {
 
         randomVerificationCode = redisUtils.getData("VC("+ authEmailDto.getEmail() + "):");
 
-        return Objects.equals(authEmailDto.getCode(), randomVerificationCode);
+        return Objects.equals(authEmailDto.getAuthnum(), randomVerificationCode);
     }
 
 }

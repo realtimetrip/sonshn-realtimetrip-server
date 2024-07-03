@@ -1,6 +1,5 @@
 package com.venti.realtimetrip.domain.auth.dto;
 
-import com.venti.realtimetrip.domain.auth.entity.AuthCode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,8 +12,8 @@ import lombok.NoArgsConstructor;
 public class SignUpEmailDto {
     private String email;
 
-    public AuthCode toEntity() {
-        return AuthCode.builder()
+    public SignUpEmailDto toSignUpEmailDto() {
+        return SignUpEmailDto.builder()
                 .email(this.email)
                 .build();
     }
