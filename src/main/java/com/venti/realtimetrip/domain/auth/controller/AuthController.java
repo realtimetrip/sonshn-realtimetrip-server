@@ -1,5 +1,6 @@
 package com.venti.realtimetrip.domain.auth.controller;
 
+import com.venti.realtimetrip.domain.auth.dto.AuthEmailDto;
 import com.venti.realtimetrip.domain.auth.dto.SignUpEmailDto;
 import com.venti.realtimetrip.domain.auth.service.AuthService;
 import jakarta.mail.MessagingException;
@@ -32,6 +33,24 @@ public class AuthController {
         String verificationCode = authService.sendEmail(signUpEmailDto.getEmail());
 
         return "입력하신 이메일로 인증 코드 " + verificationCode + " 가 전송되었습니다.";
+    }
+
+    /**
+     * 인증번호 검증 API
+     * [POST] /auth/verify-email
+     *
+     * @return String
+     */
+    @PostMapping("/verify-email")
+    public String sendEmail(@RequestBody AuthEmailDto authEmailDto) {
+
+        boolean isVerified = authService.checkEmailAndCode(authEmailDto);
+
+        if(!isVerified) {
+            return "인증번호가 일치하지 않습니다!";
+        } else {
+            return "인증이 완료되었습니다!";
+        }
     }
 
 }
