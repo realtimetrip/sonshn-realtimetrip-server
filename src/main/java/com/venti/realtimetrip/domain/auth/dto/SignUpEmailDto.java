@@ -9,14 +9,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthEmailDto {
+public class SignUpEmailDto {
     private String email;
-    private String authnum;
 
-    public AuthEmailDto toAuthEmailDto() {
-        return AuthEmailDto.builder()
+    public SignUpEmailDto toSignUpEmailDto() {
+        return SignUpEmailDto.builder()
                 .email(this.email)
-                .authnum(this.authnum)
                 .build();
     }
 }

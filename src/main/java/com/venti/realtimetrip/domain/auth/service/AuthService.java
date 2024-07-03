@@ -1,8 +1,7 @@
 package com.venti.realtimetrip.domain.auth.service;
 
 import com.venti.realtimetrip.domain.auth.dto.AuthEmailDto;
-import com.venti.realtimetrip.domain.auth.entity.AuthCode;
-import com.venti.realtimetrip.domain.auth.repository.AuthRepository;
+import com.venti.realtimetrip.utils.RedisUtils;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
@@ -12,7 +11,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Slf4j
@@ -20,8 +18,7 @@ import java.util.Objects;
 @Service
 public class AuthService {
 
-    private final AuthRepository authRepository;
-
+    private final RedisUtils redisUtils;
     private final JavaMailSender javaMailSender;
 
     private String randomVerificationCode;
@@ -31,15 +28,11 @@ public class AuthService {
      */
     public void createRandomCode(String email){
 
-        randomVerificationCode = String.valueOf((int)(Math.random() * 899999) + 100000);
+        randomVerificationCode = String.valueOf((int)(Math.random() * 8999) + 1000);
 
-        AuthCode authCode = AuthCode.builder()
-                .email(email)
-                .code(randomVerificationCode)
-                .createdAt(LocalDateTime.now())
-                .build();
+        int CODE_EXPIRATION_TIME = 3 * 60 * 1000; // 인증 코드 유효 시간: 3분
 
-        authRepository.save(authCode);
+        redisUtils.setAuthCodeData("VC(" + email + "):", randomVerificationCode, CODE_EXPIRATION_TIME);
 
     }
 
@@ -85,10 +78,10 @@ public class AuthService {
      * @return 일치하는 인증 코드 정보가 존재하면 true, 그렇지 않으면 false
      */
     public boolean checkEmailAndCode(AuthEmailDto authEmailDto) {
-        
-        AuthCode authCode = authRepository.findByEmailOrderByCreatedAtDesc(authEmailDto.getEmail());
 
-        return Objects.equals(authCode.getCode(), authEmailDto.getCode());
+        randomVerificationCode = redisUtils.getData("VC("+ authEmailDto.getEmail() + "):");
+
+        return Objects.equals(authEmailDto.getAuthnum(), randomVerificationCode);
     }
 
 }
