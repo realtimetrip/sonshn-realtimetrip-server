@@ -4,6 +4,7 @@ import com.venti.realtimetrip.domain.auth.dto.AuthEmailDto;
 import com.venti.realtimetrip.domain.auth.service.AuthService;
 import com.venti.realtimetrip.domain.user.dto.UserDto;
 import com.venti.realtimetrip.domain.user.dto.UserLoginDto;
+import com.venti.realtimetrip.domain.user.dto.UserProfileDto;
 import com.venti.realtimetrip.domain.user.service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -58,6 +59,19 @@ public class UserController {
         response.addCookie(cookieCode);
 
         return loginUser;
+    }
+
+    /**
+     * 유저 프로필 조회
+     * @param userId 유저 entity 의 PK
+     * @return 유저의 이메일
+     */
+    @GetMapping("/get-profile/{userId}")
+    public String getProfile(@PathVariable(name = "userId") Long userId) {
+
+        UserProfileDto userProfileDto = userService.getProfile(userId);
+
+        return "조회하는 유저의 이메일은 " + userProfileDto.getEmail() + " 입니다.";
     }
 
 }
