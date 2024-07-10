@@ -2,6 +2,7 @@ package com.venti.realtimetrip.domain.user.service;
 
 import com.venti.realtimetrip.domain.user.dto.UserDto;
 import com.venti.realtimetrip.domain.user.dto.UserLoginDto;
+import com.venti.realtimetrip.domain.user.dto.UserProfileDto;
 import com.venti.realtimetrip.domain.user.entity.User;
 import com.venti.realtimetrip.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +42,26 @@ public class UserService {
         User loginUser = userRepository.findByEmailAndPassword(userLoginDto.getEmail(), userLoginDto.getPassword());
 
         return loginUser.getEmail();
+    }
+
+    /**
+     * 유저 프로필 조회
+     * @param userId 유저 entity 의 PK
+     * @return 유저의 이메일
+     */
+    @Transactional(readOnly = true)
+    public UserProfileDto getProfile(Long userId) {
+
+        User user = userRepository.findByUserId(userId);
+
+        UserProfileDto userProfileDto = UserProfileDto.builder()
+                .userId(user.getUserId())
+                .email(user.getEmail())
+                .nickname(user.getNickname())
+                .profile(user.getProfile())
+                .build();
+
+        return userProfileDto;
     }
 
 }
